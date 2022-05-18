@@ -5,7 +5,16 @@ import torchvision.transforms as T
 from PIL import Image
 import numpy as np
 import gradio as gr
-model = AQC_NET(pretrain=True,num_label=5)
+import requests
+import os
+
+def get_file(url,path,filename, chunk_size=128):
+    r = requests.get(url, stream=True)
+    with open(path, 'wb') as downloaded:
+        for chunk in r.iter_content(chunk_size=chunk_size):
+            downloaded.write(chunk)
+
+
 def predict(image_name):
     model.eval()
     
@@ -48,5 +57,12 @@ def run_gradio():
         theme="huggingface",
     ).launch(debug=True, enable_queue=True)
 
-#print(predict("test_image.jpg"))
+model = AQC_NET(pretrain=True,num_label=5)
+if not os.path.exists('weight.pth'):
+    print("weight.pth does not exist. Downloading...")
+    get_file("https://github.com/Kaldr4/EEE-199/releases/download/v1/weight.pth", 'weight.pth',"weight.pth")
+    print("weight.pth downloaded")
+else:
+    print('Specified file (weight.pth) already downloaded. Skipping this step.')
+torch.load("weight.pth")
 run_gradio()
