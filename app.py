@@ -65,7 +65,7 @@ if not os.path.exists('weight.pth'):
 else:
     print('Specified file (weight.pth) already downloaded. Skipping this step.')
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-state_dict = torch.load("weight.pth")
+state_dict = torch.load('weight.pth', map_location=torch.device(device))
 model.load_state_dict(state_dict)
 
 run_gradio()
