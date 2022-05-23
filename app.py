@@ -25,7 +25,7 @@ def predict(image_name):
     inputs = inputs.to(device)
     with torch.no_grad():
         outputs = model(inputs.unsqueeze(0))
-        values, indices = torch.topk(outputs, k=5) 
+        values, indices = torch.topk(outputs, k=2) 
         print(values,indices)
     return {i.item(): v.item() for i, v in zip(indices[0], values.detach()[0])}
 def preprocess(image_name):
@@ -57,12 +57,15 @@ def run_gradio():
         theme="huggingface",
     ).launch(debug=True, enable_queue=True)
 
-model = AQC_NET(pretrain=True,num_label=5)
+model = AQC_NET(pretrain=True, num_label=2)
 if not os.path.exists('weight.pth'):
     print("weight.pth does not exist. Downloading...")
     get_file("https://github.com/Kaldr4/EEE-199/releases/download/v1/weight.pth", 'weight.pth',"weight.pth")
     print("weight.pth downloaded")
 else:
     print('Specified file (weight.pth) already downloaded. Skipping this step.')
-torch.load("weight.pth")
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+state_dict = torch.load("weight.pth")
+model.load_state_dict(state_dict)
+
 run_gradio()
