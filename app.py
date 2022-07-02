@@ -25,7 +25,7 @@ def predict(image_name):
     inputs = inputs.to(device)
     with torch.no_grad():
         outputs = model(inputs.unsqueeze(0))
-        values, indices = torch.topk(outputs, k=2) 
+        values, indices = torch.topk(outputs, k=3) 
         print(values,indices)
     return {i.item(): v.item() for i, v in zip(indices[0], values.detach()[0])}
 def preprocess(image_name):
