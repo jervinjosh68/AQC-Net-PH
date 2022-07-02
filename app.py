@@ -16,6 +16,7 @@ def get_file(url,path,filename, chunk_size=128):
 
 
 def predict(image_name):
+    labels = {0:"1-20", 1: "21-40" , 2: "41 and above"} 
     model.eval()
     
 
@@ -27,7 +28,7 @@ def predict(image_name):
         outputs = model(inputs.unsqueeze(0))
         values, indices = torch.topk(outputs, k=3) 
         print(values,indices)
-    return {i.item(): v.item() for i, v in zip(indices[0], values.detach()[0])}
+    return {labels[i.item()]: v.item() for i, v in zip(indices[0], values.detach()[0])}
 def preprocess(image_name):
     transforms = T.Compose([
         T.Resize((256,256)),
