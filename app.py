@@ -57,7 +57,7 @@ def run_gradio():
         theme="huggingface",
     ).launch(debug=True, enable_queue=True)
 
-model = AQC_NET(pretrain=True, num_label=2)
+model = AQC_NET(pretrain=True, num_label=3)
 if not os.path.exists('weight.pth'):
     print("weight.pth does not exist. Downloading...")
     get_file("https://github.com/Kaldr4/EEE-199/releases/download/v1/weight.pth", 'weight.pth',"weight.pth")
