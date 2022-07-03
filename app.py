@@ -16,7 +16,7 @@ def get_file(url,path,filename, chunk_size=128):
 
 
 def predict(image_name):
-    labels = {0:"1-20", 1: "21-40" , 2: "41 and above"} 
+    labels = {0:"1-40", 1: "41-60" , 2: "61 and above"} 
     model.eval()
     
 
