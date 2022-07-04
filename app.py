@@ -16,7 +16,7 @@ def get_file(url,path,filename, chunk_size=128):
 
 
 def predict(image_name):
-    labels = {0:"1-40", 1: "41-60" , 2: "61 and above"} 
+    labels = {0:"1-20", 1: "21-40" , 2: "41 and above"} 
     model.eval()
     
 
@@ -40,9 +40,9 @@ def preprocess(image_name):
 
 def run_gradio():
     
-    title = "AQC_NET PH"
-    description = "trial AQC_NET"
-    examples = ["test_image.jpg","test_img.jpg"]
+    title = "AQC_NET PH - EEE199 Student Project"
+    description = "AQC_NET PH is an image-based deep learning model finetuned on a data-set created in the National Capital Region of Philippines using a Nova PM SDS011 Sensor"
+    examples = ["test_img.jpg","test_img2.jpg","test_img3.jpg"]
     inputs = [
         gr.inputs.Image(type="pil", label="Input Image")
     ]
